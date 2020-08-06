@@ -1,7 +1,8 @@
 <?php
 namespace ZBateson\MailMimeParser\Header\Part;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use ZBateson\MbWrapper\MbWrapper;
 
 /**
  * Description of AddressGroupTest
@@ -12,13 +13,14 @@ use PHPUnit_Framework_TestCase;
  * @covers ZBateson\MailMimeParser\Header\Part\HeaderPart
  * @author Zaahid Bateson
  */
-class AddressGroupPartTest extends PHPUnit_Framework_TestCase
+class AddressGroupPartTest extends TestCase
 {
     public function testNameGroup()
     {
         $name = 'Roman Senate';
         $members = ['Caesar', 'Cicero', 'Cato'];
-        $part = new AddressGroupPart($members, $name);
+        $csConverter = new MbWrapper();
+        $part = new AddressGroupPart($csConverter, $members, $name);
         $this->assertEquals($name, $part->getName());
         $this->assertEquals($members, $part->getAddresses());
         $this->assertEquals($members[0], $part->getAddress(0));

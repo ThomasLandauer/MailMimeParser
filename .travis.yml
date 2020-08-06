@@ -1,14 +1,21 @@
 language: php
+dist: trusty
 
 php:
     - 5.4
     - 5.5
     - 5.6
-    - 7
+    - 7.0
     - 7.1
-    - hhvm
+    - 7.2
+    - 7.3
+    - 7.4
+    - nightly
+matrix:
+    allow_failures:
+        - php: nightly
 
-before_script:
+install:
     - composer update
 
 script: ./vendor/bin/phpunit -c tests/phpunit.xml

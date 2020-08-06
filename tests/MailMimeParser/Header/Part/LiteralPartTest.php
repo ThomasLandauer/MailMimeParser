@@ -1,7 +1,8 @@
 <?php
 namespace ZBateson\MailMimeParser\Header\Part;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use ZBateson\MbWrapper\MbWrapper;
 
 /**
  * Description of LiteralTest
@@ -12,15 +13,17 @@ use PHPUnit_Framework_TestCase;
  * @covers ZBateson\MailMimeParser\Header\Part\HeaderPart
  * @author Zaahid Bateson
  */
-class LiteralPartTest extends PHPUnit_Framework_TestCase
+class LiteralPartTest extends TestCase
 {
     public function testInstance()
     {
-        $part = new LiteralPart('"');
+        $charsetConverter = new MbWrapper();
+
+        $part = new LiteralPart($charsetConverter, '"');
         $this->assertNotNull($part);
         $this->assertEquals('"', $part->getValue());
-        
-        $part = new LiteralPart(new Token('=?US-ASCII?Q?Kilgore_Trout?='));
+
+        $part = new LiteralPart($charsetConverter, '=?US-ASCII?Q?Kilgore_Trout?=');
         $this->assertEquals('=?US-ASCII?Q?Kilgore_Trout?=', $part->getValue());
     }
 }
